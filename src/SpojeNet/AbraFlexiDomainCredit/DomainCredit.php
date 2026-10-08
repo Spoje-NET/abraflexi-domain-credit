@@ -65,6 +65,12 @@ class DomainCredit extends \Ease\Sand
         $ident = (string) $invoice->getRecordIdent();
         $report = ['status' => 'skipped', 'message' => '', 'invoice' => $ident, 'amount' => 0.0, 'username' => null, 'exitcode' => 0];
 
+        if (!$this->isPaid($invoice)) {
+            $report['message'] = sprintf(_('%s is not paid'), $ident);
+
+            return $report;
+        }
+
         $amount = $this->creditAmount($this->itemsOfInterest($invoice));
 
         if ($amount <= 0.0) {
@@ -111,6 +117,21 @@ class DomainCredit extends \Ease\Sand
         $report['message'] = sprintf(_('%s: credit %s added to %s'), $ident, $amount, $username);
 
         return $report;
+    }
+
+    /**
+     * Fully paid invoice? Exact state match (note "stavUhr.neuhrazeno" contains "uhrazeno").
+     */
+    public function isPaid(\AbraFlexi\FakturaVydana $invoice): bool
+    {
+        $state = (string) $invoice->getDataValue('stavUhrK');
+        $remaining = (string) $invoice->getDataValue('zbyvaUhradit');
+
+        if ('' !== $remaining && (float) $remaining > 0.0) {
+            return false;
+        }
+
+        return \in_array($state, ['stavUhr.uhrazeno', 'stavUhr.uhrazenoRucne'], true) || ('' !== $remaining && 0.0 === (float) $remaining);
     }
 
     /**

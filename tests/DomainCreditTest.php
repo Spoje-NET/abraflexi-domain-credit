@@ -41,6 +41,7 @@ class DomainCreditTest extends TestCase
     {
         return [
             'stitky' => $labels,
+            'stavUhrK' => 'stavUhr.uhrazeno',
             'firma' => 'code:ACME',
             'polozkyFaktury' => [['kod' => $kod, 'mnozMj' => '500', 'cenaMj' => '1']],
         ];
@@ -115,5 +116,12 @@ class DomainCreditTest extends TestCase
         $report = $this->credit($this->subreg('ok'))->processInvoice($this->invoice($this->paid(), false));
         $this->assertSame('error', $report['status']);
         $this->assertStringContainsString('do not rerun', $report['message']);
+    }
+
+    public function testUnpaidInvoiceIsSkipped(): void
+    {
+        $data = ['stavUhrK' => 'stavUhr.neuhrazeno', 'zbyvaUhradit' => '500'] + $this->paid();
+        $report = $this->credit($this->subreg('none'))->processInvoice($this->invoice($data));
+        $this->assertSame('skipped', $report['status']);
     }
 }
