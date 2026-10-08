@@ -1,0 +1,9 @@
+/vendor/
+/.env
+.phpunit.result.cache
+/debian/abraflexi-domain-credit/
+/debian/multiflexi-abraflexi-domain-credit/
+/debian/*.debhelper.log
+/debian/*.substvars
+/debian/files
+/debian/debhelper-build-stamp

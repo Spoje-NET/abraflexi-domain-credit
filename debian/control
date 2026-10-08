@@ -1,0 +1,25 @@
+Source: abraflexi-domain-credit
+Section: web
+Priority: optional
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Build-Depends: debhelper-compat (= 13), jq, moreutils, pkg-php-tools
+Standards-Version: 4.5.1
+Homepage: https://github.com/Spoje-NET/abraflexi-domain-credit
+Rules-Requires-Root: no
+
+Package: abraflexi-domain-credit
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, php-cli, php-soap, php-spojenet-abraflexi, php-spojenet-subreg, php-vitexsoftware-ease-core
+Description: Add Subreg domain credit for paid AbraFlexi invoices
+ Reads a paid AbraFlexi issued invoice with the KREDIT_DOMENA item and adds
+ the ordered credit to the customer's Subreg account. The "API" label of the
+ invoice is removed only after the credit was added.
+
+Package: multiflexi-abraflexi-domain-credit
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, multiflexi-cli
+Pre-Depends: abraflexi-domain-credit, multiflexi-subreg
+Description: Add abraflexi-domain-credit into MultiFlexi
+ Application definition for MultiFlexi.

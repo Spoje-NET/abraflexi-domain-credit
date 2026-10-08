@@ -1,0 +1,4 @@
+bin/*                                                  usr/bin/
+src/abraflexi-domain-credit.php                        usr/share/abraflexi-domain-credit/
+src/SpojeNet/AbraFlexiDomainCredit/*                   usr/lib/php/abraflexi-domain-credit/
+debian/autoload.php                                    usr/lib/php/abraflexi-domain-credit/

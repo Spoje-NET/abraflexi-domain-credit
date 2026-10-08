@@ -1,0 +1,25 @@
+{
+    "name": "spojenet/abraflexi-domain-credit",
+    "description": "Add Subreg domain credit for paid AbraFlexi invoices (MultiFlexi application)",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Vítězslav Dvořák",
+            "email": "vitezslav.dvorak@spojenet.cz"
+        }
+    ],
+    "require": {
+        "spojenet/flexibee": "^3.7",
+        "spojenet/subreg": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "SpojeNet\\AbraFlexiDomainCredit\\": "src/SpojeNet/AbraFlexiDomainCredit"
+        }
+    }
+}

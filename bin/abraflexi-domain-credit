@@ -1,0 +1,2 @@
+#!/bin/sh
+php -f /usr/share/abraflexi-domain-credit/abraflexi-domain-credit.php -- "$@"

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VitexSoftware/php-vitexsoftware-multiflexi-core/refs/heads/main/schema/application.json",
+  "schemaVersion": "3.4.0",
+  "uuid": "b3c2f0a4-6d1e-4c57-9a38-5e0f7a1d2c94",
+  "name": {
+    "en": "AbraFlexi Domain Credit",
+    "cs": "Kredit domén z AbraFlexi faktury"
+  },
+  "description": {
+    "en": "Add ordered Subreg domain credit (KREDIT_DOMENA) for a paid AbraFlexi invoice",
+    "cs": "Přidá objednaný kredit domén Subreg (KREDIT_DOMENA) za uhrazenou fakturu v AbraFlexi"
+  },
+  "requirements": ["Subreg", "AbraFlexi"],
+  "tags": ["Subreg", "Credit", "AbraFlexi", "Json"],
+  "homepage": "https://github.com/Spoje-NET/abraflexi-domain-credit",
+  "ociimage": "docker.io/vitexsoftware/abraflexi-domain-credit",
+  "executable": "abraflexi-domain-credit",
+  "artifacts": [
+    {
+      "name": "credit_report",
+      "path": "${RESULT_FILE}",
+      "type": "file",
+      "description": {
+        "en": "JSON report of the credit operation",
+        "cs": "JSON report operace dobití kreditu"
+      }
+    }
+  ],
+  "environment": {
+    "INVOICE_ID": {
+      "type": "string",
+      "description": {
+        "en": "AbraFlexi issued invoice ID or code:CODE (EVENT_RECORD_ID is used when empty)",
+        "cs": "ID nebo code:KÓD vydané faktury v AbraFlexi (při prázdném se použije EVENT_RECORD_ID)"
+      },
+      "defval": "",
+      "required": false,
+      "category": "Behavior"
+    },
+    "ABRAFLEXI_COMPANY": {"type": "string", "description": {"en": "AbraFlexi company code", "cs": "Kód společnosti v AbraFlexi"}, "defval": "demo_de", "required": true, "category": "API"},
+    "ABRAFLEXI_LOGIN": {"type": "string", "description": {"en": "AbraFlexi Login", "cs": "AbraFlexi přihlášení"}, "defval": "winstrom", "required": true, "category": "API"},
+    "ABRAFLEXI_PASSWORD": {"type": "password", "description": {"en": "AbraFlexi password", "cs": "AbraFlexi heslo"}, "defval": "winstrom", "required": true, "category": "API"},
+    "ABRAFLEXI_URL": {"type": "string", "description": {"en": "AbraFlexi Server URI", "cs": "AbraFlexi Server URI"}, "defval": "https://demo.flexibee.eu:5434", "required": true, "category": "API"},
+    "SUBREG_LOCATION": {"type": "string", "description": {"en": "Subreg API Command Endpoint", "cs": "Subreg API Command Endpoint"}, "defval": "https://soap.subreg.cz/cmd.php", "required": true, "category": "API"},
+    "SUBREG_URI": {"type": "string", "description": {"en": "SOAP Endpoint", "cs": "SOAP Endpoint"}, "defval": "https://soap.subreg.cz/soap", "required": true, "category": "API"},
+    "SUBREG_LOGIN": {"type": "string", "description": {"en": "Subreg username", "cs": "Subreg uživatelské jméno"}, "defval": "", "required": true, "category": "API"},
+    "SUBREG_PASSWORD": {"type": "password", "description": {"en": "Subreg password", "cs": "Subreg heslo"}, "defval": "", "required": true, "category": "Security"},
+    "APP_DEBUG": {"type": "bool", "description": {"en": "Show debug messages", "cs": "Zobrazovat ladící zprávy"}, "defval": "false", "required": false, "category": "Behavior"},
+    "RESULT_FILE": {"type": "string", "description": {"en": "Write output json data to", "cs": "Zapsat výstupní json do"}, "defval": "abraflexi_domain_credit.json", "required": false, "category": "Other"},
+    "EASE_LOGGER": {"type": "string", "description": {"en": "Logger type", "cs": "Typ logování"}, "defval": "console|syslog", "required": false, "category": "Other"}
+  },
+  "exitCodes": {
+    "0": {"description": {"en": "Credit added or nothing to do", "cs": "Kredit přidán nebo není co dělat"}, "severity": "success", "retry": false},
+    "1": {"description": {"en": "Credit operation failed (see report)", "cs": "Dobití kreditu selhalo (viz report)"}, "severity": "error", "retry": false},
+    "2": {"description": {"en": "Missing INVOICE_ID", "cs": "Chybí INVOICE_ID"}, "severity": "error", "retry": false}
+  }
+}
